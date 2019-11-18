@@ -12,15 +12,15 @@ public interface ERSReimbursementDao {
 	
 	List<ERSReimbursement> findAll();
 
-	List<ERSReimbursement> findByERSName(String ersName);
+	//List<ERSReimbursement> findByERSUsername(String ersUserName);
 	
-	List<ERSReimbursement> findByERSReimbursementType(String ersType);
+	List<ERSReimbursement> findByERSReimbursementType(int ersType);
 	
-	List<ERSReimbursement> findByERSRole(String ersRole);
+	List<ERSReimbursement> findByERSUserRole(int ersUserRole);
 	
 	ERSReimbursement findByERSId(int reimId);
 	
-	ERSReimbursement findByERSUsername(String ersUsername);
+	List<ERSReimbursement> findByERSUsername(String ersUsername);
 	
 	ERSReimbursement findByERSUserEmail(String ersUserEmail);
 	

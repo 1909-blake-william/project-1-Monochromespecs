@@ -1,5 +1,6 @@
 package com.revature.servlets;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -14,8 +15,9 @@ import com.revature.models.ERSReimbursement;
 
 	public class ERSReimbursementServlet extends HttpServlet {
 
-		private ERSReimbursementDao ersReimbursementDao = ERSReimbursementDaoSQL.currentImplementation;
-
+		private static final long serialVersionUID = 1L;
+		private ERSReimbursementDao ersReimbursementDao = ERSReimbursementDaoSQL.currentImplementation;		
+		
 		@Override
 		protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 			// TODO Auto-generated method stub
@@ -33,12 +35,12 @@ import com.revature.models.ERSReimbursement;
 		@Override
 		protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-			List<ERSReimbursement> ersReimbursements = null;
+			List<ERSReimbursement> ersReimbursements = new ArrayList<>();
 
-			String ersName = req.getParameter("ersName");
+			String ersu = req.getParameter("ersUsername");
 
-			if (ersName != null) { // find by ERSUsername
-				ersReimbursements = ersReimbursementDao.findByERSName(ersName);
+			if (ersu != null) { // find by ERSUsername
+				ersReimbursements = ersReimbursementDao.findByERSUsername(ersu);
 			} else { // find all
 				ersReimbursementDao.findAll();
 			}
@@ -54,14 +56,14 @@ import com.revature.models.ERSReimbursement;
 		protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 			// read the ERSReimbursement from the request body
 			ObjectMapper om = new ObjectMapper();
-			ERSReimbursement ersR = (ERSReimbursement) om.readValue(req.getReader(), ERSReimbursement.class);
+			ERSReimbursement ersr = (ERSReimbursement) om.readValue(req.getReader(), ERSReimbursement.class);
 
-			System.out.println(ersR);
+			System.out.println(ersr);
 
-			int reimbId = ersReimbursementDao.save(ersR);
-			ersR.setReimbId(reimbId);
+			int reimbId = ersReimbursementDao.save(ersr);
+			ersr.setReimbId(reimbId);
 
-			String json = om.writeValueAsString(ersR);
+			String json = om.writeValueAsString(ersr);
 
 			resp.getWriter().write(json);
 			resp.setStatus(201); // created status code
@@ -71,8 +73,8 @@ import com.revature.models.ERSReimbursement;
 		@Override
 		protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 			String reimbIdString = req.getParameter("reimbId");
-			int ersR = Integer.parseInt(reimbIdString);
-			ersReimbursementDao.deactivate(ersR);
+			int ersr = Integer.parseInt(reimbIdString);
+			ersReimbursementDao.deactivate(ersr);
 		}
 	}
 	

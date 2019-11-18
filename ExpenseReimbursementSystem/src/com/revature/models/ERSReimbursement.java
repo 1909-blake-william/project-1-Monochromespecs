@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 
 public class ERSReimbursement implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+	
 	int reimbId;
 	int reimbAmount;
 	Timestamp reimbSubmitted;
